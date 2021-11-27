@@ -9,8 +9,8 @@ class Dustbin:
 	# Good old constructor
 	def __init__ (self, x = None, y = None):
 		if x == None and y == None:
-			self.x = random.randint(0, xMax)
-			self.y = random.randint(0, yMax)
+			self.x = random.randint(0, configs.xMax)
+			self.y = random.randint(0, configs.yMax)
 		else:
 			self.x = x
 			self.y = y

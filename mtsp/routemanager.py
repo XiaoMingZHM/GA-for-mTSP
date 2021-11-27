@@ -8,6 +8,10 @@ class RouteManager:
     destinationDustbins = []
 
     @classmethod
+    def clearDustbin (cls):
+        cls.destinationDustbins = []
+
+    @classmethod
     def addDustbin (cls, db):
         cls.destinationDustbins.append(db)
 

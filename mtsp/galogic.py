@@ -14,7 +14,7 @@ class GA:
 
         elitismOffset = 0
         # If fittest chromosome has to be passed directly to next generation
-        if elitism:
+        if configs.elitism:
             newPopulation.saveRoute(0, pop.getFittest())
             elitismOffset = 1
 
@@ -41,35 +41,35 @@ class GA:
         startPos = 0
         endPos = 0
         while (startPos >= endPos):
-            startPos = random.randint(1, numNodes-1)
-            endPos = random.randint(1, numNodes-1)
+            startPos = random.randint(1, configs.numNodes-1)
+            endPos = random.randint(1, configs.numNodes-1)
 
         parent1.base = [parent1.route[0][0]]
         parent2.base = [parent2.route[0][0]]
 
-        for i in range(numTrucks):
+        for i in range(configs.numTrucks):
             for j in range(1, parent1.routeLengths[i]):
                 parent1.base.append(parent1.route[i][j])
 
 
-        for i in range(numTrucks):
+        for i in range(configs.numTrucks):
             for j in range(1, parent2.routeLengths[i]):
                 parent2.base.append(parent2.route[i][j])
 
-        for i in range(1, numNodes):
+        for i in range(1, configs.numNodes):
             if i > startPos and i < endPos:
                 child.base[i] = parent1.base[i]
 
-        for i in range(numNodes):
+        for i in range(configs.numNodes):
             if not(child.containsDustbin(parent2.base[i])):
-                for i1 in range(numNodes):
+                for i1 in range(configs.numNodes):
                     if child.base[i1].checkNull():
                         child.base[i1] =  parent2.base[i]
                         break
 
         k=0
         child.base.pop(0)
-        for i in range(numTrucks):
+        for i in range(configs.numTrucks):
             child.route[i].append(RouteManager.getDustbin(0)) # add same first node for each route
             for j in range(child.routeLengths[i]-1):
                 child.route[i].append(child.base[k]) # add shuffled values for rest
@@ -82,8 +82,8 @@ class GA:
         index1 = 0
         index2 = 0
         while index1 == index2:
-            index1 = random.randint(0, numTrucks - 1)
-            index2 = random.randint(0, numTrucks - 1)
+            index1 = random.randint(0, configs.numTrucks - 1)
+            index2 = random.randint(0, configs.numTrucks - 1)
         #print ('Indexes selected: ' + str(index1) + ',' + str(index2))
 
         #generate replacement range for 1
@@ -104,7 +104,7 @@ class GA:
         swap1 = [] # values from 1
         swap2 = [] # values from 2
 
-        if random.randrange(1) < mutationRate:
+        if random.randrange(1) < configs.mutationRate:
             # pop all the values to be replaced
             for i in range(route1startPos, route1lastPos + 1):
                 swap1.append(route.route[index1].pop(route1startPos))
@@ -125,9 +125,9 @@ class GA:
     # Tournament Selection: choose a random set of chromosomes and find the fittest among them 
     @classmethod
     def tournamentSelection (cls, pop):
-        tournament = Population(tournamentSize, False)
+        tournament = Population(configs.tournamentSize, False)
 
-        for i in range(tournamentSize):
+        for i in range(configs.tournamentSize):
             randomInt = random.randint(0, pop.populationSize-1)
             tournament.saveRoute(i, pop.getRoute(randomInt))
 

@@ -9,8 +9,12 @@ class Population:
     def __init__ (self, populationSize, initialise):
         self.populationSize = populationSize
         if initialise:
+            # clear shared list
+            while len(self.routes) > 0:
+                self.routes.pop()
             for i in range(populationSize):
                 newRoute = Route() # Create empty route
+                # print(len(newRoute.base))
                 newRoute.generateIndividual() # Add route sequences
                 self.routes.append(newRoute) # Add route to the population
 

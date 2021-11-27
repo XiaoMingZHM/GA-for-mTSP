@@ -14,7 +14,7 @@ class Route:
         # 1D array having route lengths
         self.routeLengths = route_lengths()
 
-        for i in range(numTrucks):
+        for i in range(configs.numTrucks):
             self.route.append([])
 
         # fitness value and total distance of all routes
@@ -36,7 +36,7 @@ class Route:
             self.base[dindex-1] = RouteManager.getDustbin(dindex)
         random.shuffle(self.base)
 
-        for i in range(numTrucks):
+        for i in range(configs.numTrucks):
             self.route[i].append(RouteManager.getDustbin(0)) # add same first node for each route
             for j in range(self.routeLengths[i]-1):
                 self.route[i].append(self.base[k]) # add shuffled values for rest
@@ -65,7 +65,7 @@ class Route:
         if self.distance == 0:
             routeDistance = 0
 
-            for i in range(numTrucks):
+            for i in range(configs.numTrucks):
                 for j in range(self.routeLengths[i]):
                     fromDustbin = self.getDustbin(i, j)
 
@@ -93,7 +93,7 @@ class Route:
         print (self.routeLengths)
         #for k in range(RouteManager.numberOfDustbins()-1):
         #    print (self.base[k].toString())
-        for i in range(numTrucks):
+        for i in range(configs.numTrucks):
             for j in range(self.routeLengths[i]):
                 geneString += self.getDustbin(i,j).toString() + '|'
             geneString += '\n'
